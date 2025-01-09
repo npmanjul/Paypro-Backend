@@ -6,7 +6,7 @@ const app=express();
 
 const allowedOrigins = [
     'http://localhost:3000',
-    'https://v9h6vb79-3000.inc1.devtunnels.ms',
+    'https://e-wallet-cyan.vercel.app',
 ];
 
 const corsOptions = {
