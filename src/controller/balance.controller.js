@@ -1,15 +1,15 @@
-import User from '../model/user.model.js';
+import Wallet from "../model/wallet.model.js";
 
 const getBalance = async (req, res) => {
     try {
         const userId = req.params.userId;
-        const user = await User.findById(userId);
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
+        const wallet = await Wallet.findOne({ user: userId });
+        if (!wallet) {
+            return res.status(404).json({ message: "Wallet not found" });
         }
         res.status(200).json({
             message: "Balance fetched successfully",
-            balance: user.balance
+            balance: wallet.balance
         });
     }catch(error){
         res.status(500).json({

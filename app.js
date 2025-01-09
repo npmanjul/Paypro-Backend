@@ -6,6 +6,7 @@ const app=express();
 
 const allowedOrigins = [
     'http://localhost:3000',
+    'https://v9h6vb79-3000.inc1.devtunnels.ms',
 ];
 
 const corsOptions = {

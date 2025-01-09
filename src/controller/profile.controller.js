@@ -9,7 +9,6 @@ const getProfile = async (req, res) => {
             return res.status(404).json({ message: "User not found" });
         }
         res.status(200).json({
-            message: "Profile fetched successfully",
             profile: user
         });
     } catch (error) {
@@ -22,7 +21,6 @@ const getProfile = async (req, res) => {
 
 const updateProfile = async (req, res) => {
     const userId = req.params.userId;
-
     try {
         const user = await User.findById(userId);
         if (!user) {
@@ -78,5 +76,8 @@ const updateProfile = async (req, res) => {
         });
     }
 };
+
+
+
 
 export { getProfile, updateProfile };

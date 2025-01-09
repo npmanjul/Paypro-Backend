@@ -8,4 +8,6 @@ const router = Router();
 router.route('/getprofile/:userId').get(authMiddleware,getProfile);
 router.route('/updateprofile/:userId').patch(authMiddleware,upload.single('image'), updateProfile);
 
+
+
 export default router;

@@ -7,34 +7,41 @@ const getAllTransactions = async (req, res) => {
         const transactions_from = await Transaction.find({ from: userId });
         const transactions_to = await Transaction.find({ to: userId });
 
-        const allTransactions=[...transactions_from,...transactions_to];
-
-
-        if (!allTransactions || allTransactions.length === 0) {
-            return res.status(404).json({ message: "No transactions found for this user" });
-        }
-
-        const getTransactions = await Promise.all(
-            allTransactions.map(async (transaction) => {
-                const fromUser = await User.findById(transaction.from);
-                const toUser = await User.findById(transaction.to);
-
+        // money out from account
+        const fromTransactions = await Promise.all(
+            transactions_from.map(async (transaction) => {
+                const fromUser = await User.findById(transaction.to);
                 return {
                     transactionId: transaction._id,
-                    from: fromUser ? fromUser.name : "Unknown Sender",
-                    fromId: fromUser ? fromUser._id : "Unknown Sender",
-                    to: toUser ? toUser.name : "Unknown Recipient",
-                    toId: toUser ? toUser._id : "Unknown Recipient",
+                    to: fromUser.name,
                     amount: transaction.amount,
                     timestamp: transaction.timestamp,
-                    transactionType: transaction.transactionType,
                 };
             })
         );
 
+        // money in the account
+        const toTransactions = await Promise.all(
+            transactions_to.map(async (transaction) => {
+                const toUser = await User.findOne(transaction.from);
+                return {
+                    transactionId: transaction._id,
+                    from: toUser.name,
+                    amount: transaction.amount,
+                    timestamp: transaction.timestamp,
+                };
+            })
+        );
+
+        const allTransactions = [...fromTransactions, ...toTransactions];
+
+        if (!allTransactions || allTransactions.length === 0) {
+            return res.status(404).json({ message: "No transactions found for this user" });
+        }
+        const sortedTransactions = allTransactions.sort((a, b) => b.timestamp - a.timestamp);
+
         res.status(200).json({
-            message: "Transaction history fetched successfully",
-            transactions: getTransactions,
+            transactions: sortedTransactions,
         });
     } catch (error) {
         res.status(500).json({

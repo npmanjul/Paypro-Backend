@@ -24,14 +24,10 @@ const userSchema=new Schema({
     image:{
         type:String,
     },
-    balance: {
-        type: Number,
-        default: 0
+    wallet:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Wallet'
     },
-    transaction: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Transaction'
-    }],
 });
 
 userSchema.pre('save',async function(next){
