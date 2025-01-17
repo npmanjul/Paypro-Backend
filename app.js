@@ -4,20 +4,9 @@ import cors from 'cors';
 
 const app=express();
 
-const allowedOrigins = [
-    'http://localhost:3000',
-    'https://e-wallet-cyan.vercel.app',
-];
-
 const corsOptions = {
-    origin: (origin, callback) => {
-        console.log('Request origin:', origin);  // Log the incoming origin
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
+    origin: '*',
+    allowedHeaders: 'Content-Type, Authorization',
     credentials: true,
 };
 

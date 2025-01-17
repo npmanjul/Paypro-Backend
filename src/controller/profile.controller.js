@@ -4,7 +4,7 @@ import { deleteFromCloudinary, extractPublicId, uploadOnCloudinary } from '../ut
 const getProfile = async (req, res) => {
     const userId = req.params.userId;
     try {
-        const user = await User.findById(userId);
+        const user = await User.findById(userId, {password:0});
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }

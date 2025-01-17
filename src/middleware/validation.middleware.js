@@ -1,21 +1,24 @@
 const validationMiddleware = (schema) => async (req, res, next) => {
     try {
-        const data = await schema.parseAsync(req.body);
-        req.body = data;
-        next();
+      const data = await schema.parseAsync(req.body);
+      req.body = data;
+      next();
+    } catch (err) {
+      if (err.errors && Array.isArray(err.errors)) {
+        const validationErrors = err.errors.map((error) => ({
+          field: error.path.join('.'),
+          message: error.message,
+        }));
+  
+        return res.status(422).json({
+          statusCode: 422,
+          message: "Validation error",
+          errors: validationErrors[0],
+        });
+      }
+  
+      next(err);
     }
-    catch (err) {
-        const extraDetails = err.errors[0].message;
-        const message = "Fill this input properly";
-        const statusCode = 422;
-
-        const error = {
-            statusCode,
-            message,
-            extraDetails
-        }
-        next(error);
-    }
-}
-
-export default validationMiddleware;
+  };
+  
+  export default validationMiddleware;

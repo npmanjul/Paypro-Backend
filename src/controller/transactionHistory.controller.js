@@ -16,6 +16,7 @@ const getAllTransactions = async (req, res) => {
                     to: fromUser.name,
                     amount: transaction.amount,
                     timestamp: transaction.timestamp,
+                    status: transaction.status,
                 };
             })
         );
@@ -29,6 +30,7 @@ const getAllTransactions = async (req, res) => {
                     from: toUser.name,
                     amount: transaction.amount,
                     timestamp: transaction.timestamp,
+                    status: transaction.status,
                 };
             })
         );
