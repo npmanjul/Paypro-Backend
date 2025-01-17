@@ -7,7 +7,7 @@ import validationMiddleware from '../middleware/validation.middleware.js';
 const router = Router();
 
 // User Authentication
-router.route('/login').post(validationMiddleware(loginSchema),login);
+router.route('/login').post(login);
 router.route('/signup').post(validationMiddleware(signupSchema),signup);
 
 //PIN
