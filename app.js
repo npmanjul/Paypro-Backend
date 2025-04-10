@@ -20,6 +20,7 @@ import moneyRouter from './src/router/money.router.js';
 import transactionHistoryRouter from './src/router/transactionHistory.router.js';
 import balanceRouter from './src/router/balance.router.js';
 import profileRouter from './src/router/profile.router.js';
+import contactRouter from './src/router/contact.router.js';
 
 //Router declaration
 app.use(`${API_VERSION}/auth`,authRouter);
@@ -27,5 +28,6 @@ app.use(`${API_VERSION}/transaction`,moneyRouter);
 app.use(`${API_VERSION}/transactionHistory`,transactionHistoryRouter);
 app.use(`${API_VERSION}/balance`,balanceRouter);
 app.use(`${API_VERSION}/profile`,profileRouter);
+app.use(`${API_VERSION}/contact`,contactRouter);
 
 export default app;
